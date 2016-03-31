@@ -1,8 +1,6 @@
 # PactExpectations
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/pact_expectations`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Pact response convert to stub.
 
 ## Installation
 
@@ -22,7 +20,66 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+for example
+
+```ruby
+class APIClient
+  def item(id)
+    # api request
+  end
+end
+
+PactExpectations.add_response_body_for(
+  "a request for an item",
+  Pact.like(
+    id: 1,
+    name: "pen",
+  ),
+)
+
+## Pact spec
+describe APIClient, pact: true do
+  describe "#item" do
+      before do
+        api
+          .given("an item exists")
+          .upon_receiving("a request for an item")
+          .with(method: :get, path: "/item/1")
+          .will_respond_with(
+            status: 200,
+            body: PactExpectations.response_body_for("a request for an item"),
+          )
+      end
+      it { expect(APIClient.item(1).name).to eq "pen" }
+    end
+  end
+end
+
+## stab
+describe ItemsController do
+  describe "show" do
+    before do
+      allow(APIClient).to(
+        receive(:item).with(1).and_return(PactExpectations.reificated_body_for("a request for an item"))
+      )
+    end
+    it do
+      get :show, id: 1
+      expect(assigns[:item].name).to eq "pen"
+    end
+  end
+end
+```
+
+### Verify expectation was called.
+
+```ruby
+RSpec.configure do |config|
+  config.after(:suite) do
+    PactExpectations.verify if ENV["PACT_VERIFY_EXPECTATIONS"] == "1"
+  end
+end
+```
 
 ## Development
 
@@ -32,5 +89,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/pact_expectations.
+Bug reports and pull requests are welcome on GitHub at https://github.com/yoshiori/pact_expectations.
 
+## Special Thanks
+[Taiki Ono](https://github.com/taiki45) gave me a lot of advice.
