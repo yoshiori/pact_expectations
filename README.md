@@ -62,7 +62,7 @@ describe ItemsController do
   describe "show" do
     before do
       allow(APIClient).to(
-        receive(:item).with(1).and_return(PactExpectations.reificated_body_for("a request for an item"))
+        receive(:item).with(1).and_return(PactExpectations.reified_body_for("a request for an item"))
       )
     end
     it do

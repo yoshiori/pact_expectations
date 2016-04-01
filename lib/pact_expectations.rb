@@ -15,7 +15,7 @@ class PactExpectations
       expectations[key]
     end
 
-    def reificated_body_for(key)
+    def reified_body_for(key)
       raise NotFound unless expectations.include?(key)
       reificated_call << key
       Pact::Reification.from_term(expectations[key])
