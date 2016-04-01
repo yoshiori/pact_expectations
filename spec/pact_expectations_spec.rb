@@ -40,18 +40,18 @@ describe PactExpectations do
     end
   end
 
-  describe ".reificated_body_for" do
+  describe ".reified_body_for" do
     before do
       PactExpectations.add_response_body_for("foo", Pact.like(name: "pen"))
     end
 
-    it "return reificated body" do
-      expect(PactExpectations.reificated_body_for("foo")).to eq(name: "pen")
+    it "return reified body" do
+      expect(PactExpectations.reified_body_for("foo")).to eq(name: "pen")
     end
 
     context "key not found" do
       it do
-        expect { PactExpectations.reificated_body_for("bar") }.to(
+        expect { PactExpectations.reified_body_for("bar") }.to(
           raise_error(PactExpectations::NotFound)
         )
       end
@@ -63,10 +63,10 @@ describe PactExpectations do
       PactExpectations.add_response_body_for("foo", Pact.like(name: "pen"))
     end
 
-    context "call response_body_for and reificated_body_for" do
+    context "call response_body_for and reified_body_for" do
       before do
         PactExpectations.response_body_for("foo")
-        PactExpectations.reificated_body_for("foo")
+        PactExpectations.reified_body_for("foo")
       end
       it "do nothing" do
         expect(PactExpectations.verify).to be_nil
@@ -74,7 +74,7 @@ describe PactExpectations do
     end
 
     context "not call response_body_for" do
-      before { PactExpectations.reificated_body_for("foo") }
+      before { PactExpectations.reified_body_for("foo") }
       it do
         expect { PactExpectations.verify }.to(
           raise_error(PactExpectations::VerifyError)
@@ -82,7 +82,7 @@ describe PactExpectations do
       end
     end
 
-    context "not call reificated_body_for" do
+    context "not call reified_body_for" do
       before { PactExpectations.response_body_for("foo") }
       it do
         expect { PactExpectations.verify }.to(
@@ -91,7 +91,7 @@ describe PactExpectations do
       end
     end
 
-    context "not call response_body_for and reificated_body_for" do
+    context "not call response_body_for and reified_body_for" do
       it do
         expect { PactExpectations.verify }.to(
           raise_error(PactExpectations::VerifyError)
