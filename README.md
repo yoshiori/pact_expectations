@@ -27,7 +27,7 @@ for example
 ```ruby
 class APIClient
   def item(id)
-    # api request
+    # Sending api request
   end
 end
 
@@ -39,7 +39,7 @@ PactExpectations.add_response_body_for(
   ),
 )
 
-## Pact spec
+## CDC testing with Pact
 describe APIClient, pact: true do
   describe "#item" do
       before do
@@ -57,7 +57,7 @@ describe APIClient, pact: true do
   end
 end
 
-## stab
+## Stub Remote Facade's method
 describe ItemsController do
   describe "show" do
     before do
