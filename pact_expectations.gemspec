@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Yoshiori SHOJI"]
   spec.email         = ["yoshiori@gmail.com"]
 
-  spec.summary       = %q{Pact response convert to stub.}
+  spec.summary       = %q{Manage and convert Pact expectations to stubs for Remote Facade.}
   spec.description   = spec.summary
   spec.homepage      = "https://github.com/yoshiori/pact_expectations"
   spec.license       = "MIT"
