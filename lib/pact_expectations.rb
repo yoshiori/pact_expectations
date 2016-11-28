@@ -1,5 +1,5 @@
 require "pact_expectations/version"
-require "pact/support/version"
+require "pact/support"
 require "set"
 
 class PactExpectations
