@@ -1,6 +1,7 @@
-require "pact_expectations/version"
-require "pact/support"
 require "set"
+require "pact/support"
+
+require "pact_expectations/version"
 
 class PactExpectations
   class Error < ::StandardError
