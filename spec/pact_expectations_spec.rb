@@ -77,7 +77,7 @@ RSpec.describe PactExpectations do
       before { PactExpectations.reified_body_for("foo") }
       it do
         expect { PactExpectations.verify }.to(
-          raise_error(PactExpectations::VerifyError)
+          raise_error(PactExpectations::ExpectationNotCalled)
         )
       end
     end
@@ -86,7 +86,7 @@ RSpec.describe PactExpectations do
       before { PactExpectations.response_body_for("foo") }
       it do
         expect { PactExpectations.verify }.to(
-          raise_error(PactExpectations::VerifyError)
+          raise_error(PactExpectations::ExpectationNotCalled)
         )
       end
     end
@@ -94,7 +94,7 @@ RSpec.describe PactExpectations do
     context "not call response_body_for and reified_body_for" do
       it do
         expect { PactExpectations.verify }.to(
-          raise_error(PactExpectations::VerifyError)
+          raise_error(PactExpectations::ExpectationNotCalled)
         )
       end
     end

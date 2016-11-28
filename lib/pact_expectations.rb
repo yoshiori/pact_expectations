@@ -11,7 +11,7 @@ class PactExpectations
   class DuplicatedKey < Error
   end
 
-  class VerifyError < Error
+  class ExpectationNotCalled < Error
     def initialize(not_call_responses = [], not_call_reificated = [])
       @not_call_responses = not_call_responses
       @not_call_reificated = not_call_reificated
@@ -44,6 +44,7 @@ class PactExpectations
       message << "\n"
     end
   end
+  VerifyError = ExpectationNotCalled # For backward-compatibility
 
   class << self
     def add_response_body_for(key, expectation = {})
@@ -68,7 +69,7 @@ class PactExpectations
       not_call_reificated = reificated_call ^ expectations.keys
 
       if !not_call_responses.empty? || !not_call_reificated.empty?
-        raise VerifyError.new(not_call_responses, not_call_reificated)
+        raise ExpectationNotCalled.new(not_call_responses, not_call_reificated)
       end
     end
 
