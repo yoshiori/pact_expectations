@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe PactExpectations do
+RSpec.describe PactExpectations do
   it "has a version number" do
     expect(PactExpectations::VERSION).not_to be nil
   end
